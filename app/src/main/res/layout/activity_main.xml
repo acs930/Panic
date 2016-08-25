@@ -9,6 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.samples.alarmingsmock.panic.MainActivity">
 
+    <VideoView
+        android:id="@+id/animation_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+    </VideoView>
+
     <Switch
         android:id="@+id/panic_switch"
         android:layout_centerHorizontal="true"
@@ -43,4 +50,13 @@
         android:background="@drawable/panic_button_off_selector"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/invisible_button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@color/invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+
 </RelativeLayout>
