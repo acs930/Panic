@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //panic or not here
                 playSound();
+
             }
         });
         viewHolder.invisibleButton.setOnClickListener(new View.OnClickListener() {
