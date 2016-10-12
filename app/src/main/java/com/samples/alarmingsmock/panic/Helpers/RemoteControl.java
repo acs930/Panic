@@ -4,10 +4,15 @@ import android.content.Context;
 import android.media.MediaDataSource;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.Log;
+
+import com.samples.alarmingsmock.panic.R;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Dictionary;
+import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -16,7 +21,9 @@ import java.util.Vector;
  */
 
 // Singleton controller for the Media Player, might need a better name
-public class RemoteControl {
+public class RemoteControl implements MediaPlayer.OnPreparedListener{
+
+    public static final String TAG = RemoteControl.class.getName();
 
     private RemoteControl()
     {
@@ -38,7 +45,7 @@ public class RemoteControl {
 
     private void initializeMediaPlayer()
     {
-        if(leMediaPlayer != null)
+        if(leMediaPlayer == null)
         {
             leMediaPlayer = new MediaPlayer();
         } else
@@ -69,7 +76,7 @@ public class RemoteControl {
         playerStatus = false;
     }
 
-    public void loadAndPlaySound(Context currentContext, String fileName, Dictionary fileStore)
+    public void loadAndPlaySound(Context currentContext, String fileName, Map fileStore)
     {
         if(!playerStatus){
             this.initializeMediaPlayer();
@@ -77,11 +84,12 @@ public class RemoteControl {
 
         try {
             int resourceId = (int) fileStore.get(fileName);
-            String resourcePath = buildResourcePath(currentContext, resourceId);
+            String resourcePath = buildResourcePath(currentContext, "test.mp3");
 
             leMediaPlayer.setDataSource(resourcePath);
+            prepareListener();
             //TODO maybe set a display surface here, also find out what a display surface is
-            leMediaPlayer.start();
+
 
         } catch(FileNotFoundException e)
         {
@@ -89,12 +97,6 @@ public class RemoteControl {
         } catch (IOException e){
 
         }
-
-        /*try{
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }*/
     }
 
     public void loadAndPlaySound(Context currentContext, Uri fileUri)
@@ -104,10 +106,19 @@ public class RemoteControl {
         }
         try {
             leMediaPlayer.setDataSource(currentContext, fileUri);
-            leMediaPlayer.start();
+            prepareListener();
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void stopPlaying(){
+        if(playerStatus)
+        {
+            leMediaPlayer.stop();
+        } else {
+            Log.d(TAG, "Player is already stopped");
         }
     }
 
@@ -116,8 +127,27 @@ public class RemoteControl {
 
     }
 
-    private String buildResourcePath(Context currentContext, int resourceId)
+    // This does not work as the path to the actual file doesn't have the resource id
+    /*private String buildResourcePath(Context currentContext, int resourceId)
     {
-        return "android.resource://"+currentContext.getPackageName()+"raw/"+resourceId;
+        return "android.resource://"+currentContext.getPackageName()+"/raw/"+resourceId;
+    }*/
+
+    private String buildResourcePath(Context currentContext, String fileName)
+    {
+        return "android.resource://"+currentContext.getPackageName()+"/raw/"+fileName;
+    }
+
+    // The media player ahs to be prepared before it can play a sound
+    // This will always be run before attempting to play a sound and the listener will be called when it is ready
+    private void prepareListener()
+    {
+        leMediaPlayer.setOnPreparedListener(this);
+        leMediaPlayer.prepareAsync();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        leMediaPlayer.start();
     }
 }

@@ -18,8 +18,12 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.VideoView;
 
+import com.samples.alarmingsmock.panic.Helpers.RemoteControl;
+
 import java.io.File;
+import java.util.Dictionary;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     //TODO when the service is triggered it will alert me(whoever) with a notification to open the app.
     //TODO the app should open up to panic mode and will be pressed thouroughly before the switch will unlock
     //TODO then they can click on the Don't Panic button to be taken to the email...
-    //I'm pretty sure this is what cory was saying
 
 
     public static Context mContext;
@@ -118,9 +121,23 @@ public class MainActivity extends AppCompatActivity {
     //#region Sound Stuff
     public void playSound()
     {
-        // what'll this do?
-        final MediaPlayer lol = MediaPlayer.create(mContext, R.raw.never_gonna_reggie);
-        lol.start();
+
+        Random rand = new Random(System.currentTimeMillis());
+        int rNum;
+
+        RemoteControl.getInstance().stopPlaying();
+        if(PANICMODE){
+            Object[] panicArray = Constants.PanicSoundBucket.keySet().toArray();
+            rNum = rand.nextInt(panicArray.length);
+
+            RemoteControl.getInstance().loadAndPlaySound(mContext, (String)panicArray[rNum], Constants.PanicSoundBucket);
+        } else {
+            Object[] dontPanicArray = Constants.NoPanicSoundBucket.keySet().toArray();
+            rNum = rand.nextInt(dontPanicArray.length);
+
+            RemoteControl.getInstance().loadAndPlaySound(mContext, (String)dontPanicArray[rNum], Constants.NoPanicSoundBucket);
+        }
+
     }
 
     public void playSoundSpecific(String filename)
