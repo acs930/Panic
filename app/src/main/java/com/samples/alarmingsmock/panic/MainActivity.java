@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.VideoView;
 
 import java.io.File;
+import java.util.LinkedHashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //panic or not here
+                playSound();
+
             }
         });
         viewHolder.invisibleButton.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +113,21 @@ public class MainActivity extends AppCompatActivity {
         VideoView animationWindow;
 
     }
+
+
+    //#region Sound Stuff
+    public void playSound()
+    {
+        // what'll this do?
+        final MediaPlayer lol = MediaPlayer.create(mContext, R.raw.never_gonna_reggie);
+        lol.start();
+    }
+
+    public void playSoundSpecific(String filename)
+    {
+
+    }
+
 
     public void playVideo()
     {
