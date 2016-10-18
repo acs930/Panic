@@ -96,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Ping the Panic server to get the current panic state
+    private void initPanic(){
+
+    }
+
     private void updateState(boolean state){
 
 
@@ -129,13 +134,16 @@ public class MainActivity extends AppCompatActivity {
         if(PANICMODE){
             Object[] panicArray = Constants.PanicSoundBucket.keySet().toArray();
             rNum = rand.nextInt(panicArray.length);
+            RemoteControl.getInstance().quickPlaySound(mContext, (String) panicArray[rNum], Constants.PanicSoundBucket);
 
-            RemoteControl.getInstance().loadAndPlaySound(mContext, (String)panicArray[rNum], Constants.PanicSoundBucket);
+            //RemoteControl.getInstance().loadAndPlaySound(mContext, (String)panicArray[rNum], Constants.PanicSoundBucket);
         } else {
             Object[] dontPanicArray = Constants.NoPanicSoundBucket.keySet().toArray();
             rNum = rand.nextInt(dontPanicArray.length);
 
-            RemoteControl.getInstance().loadAndPlaySound(mContext, (String)dontPanicArray[rNum], Constants.NoPanicSoundBucket);
+            RemoteControl.getInstance().quickPlaySound(mContext, (String)dontPanicArray[rNum], Constants.NoPanicSoundBucket);
+
+            //RemoteControl.getInstance().loadAndPlaySound(mContext, (String)dontPanicArray[rNum], Constants.NoPanicSoundBucket);
         }
 
     }

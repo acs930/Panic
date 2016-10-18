@@ -54,16 +54,11 @@ public class Constants {
     static
     {
         PanicSoundBucket = new HashMap<String, Integer>();
-        PanicSoundBucket.put("24", R.raw.twenty_four);
-        PanicSoundBucket.put("BennyHill", R.raw.benny_hill);
-        PanicSoundBucket.put("BarrelRoll", R.raw.do_a_barrel_roll);
+
         PanicSoundBucket.put("Drama", R.raw.drama);
         PanicSoundBucket.put("Dramatic", R.raw.dramatic);
-        PanicSoundBucket.put("FlyFool", R.raw.fly_you_fools);
-        PanicSoundBucket.put("Inception", R.raw.inception);
         PanicSoundBucket.put("Trap", R.raw.its_a_trap);
         PanicSoundBucket.put("KillBill", R.raw.kill_bill_fight);
-        PanicSoundBucket.put("MetalGear", R.raw.metal_gear_alert);
         PanicSoundBucket.put("NukeAlarm", R.raw.nuclear_alarm);
         PanicSoundBucket.put("Trombone", R.raw.sad_trombone);
         PanicSoundBucket.put("Tuba", R.raw.sad_tuba);
@@ -78,10 +73,7 @@ public class Constants {
         NoPanicSoundBucket = new HashMap<String, Integer>();
         NoPanicSoundBucket.put("Applause", R.raw.applause);
         NoPanicSoundBucket.put("BeHappy", R.raw.dont_worry_be_happy);
-        NoPanicSoundBucket.put("FinalCountdown", R.raw.europe);
-        NoPanicSoundBucket.put("Hakuna", R.raw.hakuna_matata);
         NoPanicSoundBucket.put("HallelujahS", R.raw.hallelujah_short);
-        NoPanicSoundBucket.put("HallelujahL", R.raw.hallelujah_long);
         NoPanicSoundBucket.put("KeyboardCat", R.raw.keyboard_cat);
         NoPanicSoundBucket.put("OneUp", R.raw.mario_1up);
         NoPanicSoundBucket.put("Tada", R.raw.tada);

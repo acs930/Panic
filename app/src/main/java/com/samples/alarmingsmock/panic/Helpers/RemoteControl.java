@@ -43,6 +43,23 @@ public class RemoteControl implements MediaPlayer.OnPreparedListener{
     MediaPlayer leMediaPlayer;
     private boolean playerStatus = false;
 
+    private static MediaPlayer oldMediaPlayer;
+
+    //Because it is difficult loading/preparing a media player manually use this for immediate results
+    public void quickPlaySound(Context currentContext, String fileName, Map fileStore){
+
+        if(oldMediaPlayer != null){
+            oldMediaPlayer.release();
+        }
+
+        int resourceId = (int) fileStore.get(fileName);
+        MediaPlayer mp = MediaPlayer.create(currentContext, resourceId);
+
+        mp.start();
+
+        oldMediaPlayer = mp;
+    }
+
     private void initializeMediaPlayer()
     {
         if(leMediaPlayer == null)
@@ -76,6 +93,7 @@ public class RemoteControl implements MediaPlayer.OnPreparedListener{
         playerStatus = false;
     }
 
+
     public void loadAndPlaySound(Context currentContext, String fileName, Map fileStore)
     {
         if(!playerStatus){
@@ -87,7 +105,9 @@ public class RemoteControl implements MediaPlayer.OnPreparedListener{
             String resourcePath = buildResourcePath(currentContext, "test.mp3");
 
             leMediaPlayer.setDataSource(resourcePath);
-            prepareListener();
+            leMediaPlayer.prepare();
+            leMediaPlayer.start();
+            //prepareListener();
             //TODO maybe set a display surface here, also find out what a display surface is
 
 
@@ -112,6 +132,7 @@ public class RemoteControl implements MediaPlayer.OnPreparedListener{
             e.printStackTrace();
         }
     }
+
 
     public void stopPlaying(){
         if(playerStatus)
