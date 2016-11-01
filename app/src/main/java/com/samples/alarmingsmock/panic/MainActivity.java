@@ -3,13 +3,19 @@ package com.samples.alarmingsmock.panic;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +25,7 @@ import android.widget.Switch;
 import android.widget.VideoView;
 
 import com.samples.alarmingsmock.panic.Helpers.RemoteControl;
+import com.samples.alarmingsmock.panic.Helpers.ScreenControl;
 
 import java.io.File;
 import java.util.Dictionary;
@@ -84,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //panic or not here
                 playSound();
+                TestScreen1();
 
             }
         });
@@ -181,4 +189,64 @@ public class MainActivity extends AppCompatActivity {
 
         //viewHolder.animationWindow.loadUrl(localOne);
     }
+
+    //TODO I want to be able to inject a view into a view without needing to have it specified in the xml.
+    //TODO It would involve grabbing the xml of the layout and adding the new view that I've created into it.
+    //TODO I know it would be easier to grab just make a basylayout that has this and do things with it
+
+    private boolean lightFlag = PANICMODE;
+    public void ActivateLights(boolean state)
+    {
+
+    }
+
+    public void fuDraw(Canvas screen)
+    {
+        int midW = screen.getWidth();
+        Paint p = new Paint();
+        p.setColor(Color.DKGRAY);
+        screen.drawLine(midW/2, 0, midW/2, screen.getHeight(), p);
+
+    }
+
+    public void AlignLights(){
+        lightFlag = PANICMODE;
+    }
+
+    public void TestScreen0()
+    {
+        viewHolder.animationWindow.setVisibility(View.VISIBLE);
+
+
+        ScreenControl.getInstance().SetCurrentView(viewHolder.animationWindow);
+        ScreenControl.getInstance().FlipCurrentView();
+    }
+
+
+    public void TestScreen1()
+    {
+        viewHolder.animationWindow.setVisibility(View.VISIBLE);
+        if(!PANICMODE) {
+            viewHolder.animationWindow.setBackgroundColor(Color.LTGRAY);
+        } else {
+            viewHolder.animationWindow.setBackgroundColor(Color.YELLOW);
+        }
+
+        ScreenControl.getInstance().SetCurrentView(viewHolder.animationWindow);
+        ScreenControl.getInstance().FlipCurrentView();
+    }
+
+    public void TestScreen2()
+    {
+        viewHolder.animationWindow.setVisibility(View.VISIBLE);
+        if(!PANICMODE) {
+            viewHolder.animationWindow.setBackgroundColor(Color.LTGRAY);
+        } else {
+            viewHolder.animationWindow.setBackgroundColor(Color.YELLOW);
+        }
+
+        ScreenControl.getInstance().SetCurrentView(viewHolder.animationWindow);
+        ScreenControl.getInstance().FlipCurrentViewDuration(10);
+    }
+
 }

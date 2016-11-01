@@ -7,7 +7,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/parent"
     tools:context="com.samples.alarmingsmock.panic.MainActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/hiddenTopCanvas"
+        android:visibility="gone">
+
+    </View>
 
     <VideoView
         android:id="@+id/animation_window"
