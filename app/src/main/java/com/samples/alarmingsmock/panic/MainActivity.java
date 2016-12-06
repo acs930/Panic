@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         viewHolder = new ViewHolder();
 
         viewHolder.panicButton = (Button)findViewById(R.id.panic_button);
+        viewHolder.stopButton = (Button)findViewById(R.id.stop_button);
         viewHolder.invisibleButton = (Button)findViewById(R.id.invisible_button);
         viewHolder.panicSwitch = (Switch)findViewById(R.id.panic_switch);
         viewHolder.animationWindow = (VideoView)findViewById(R.id.animation_window);
@@ -91,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //panic or not here
                 playSound();
-                TestScreen1();
-
             }
         });
         viewHolder.invisibleButton.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
                 playVideo();
             }
         });
+
+        viewHolder.stopButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RemoteControl.getInstance().stopPlaying();
+                    }
+                }
+
+        );
 
     }
 
@@ -125,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Button panicButton;
         Button invisibleButton;
+        Button stopButton;
         Switch panicSwitch;
         VideoView animationWindow;
 

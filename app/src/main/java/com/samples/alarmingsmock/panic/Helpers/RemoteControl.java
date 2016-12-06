@@ -56,8 +56,15 @@ public class RemoteControl implements MediaPlayer.OnPreparedListener{
         MediaPlayer mp = MediaPlayer.create(currentContext, resourceId);
 
         mp.start();
+        playerStatus = true;
 
         oldMediaPlayer = mp;
+        oldMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playerStatus = false;
+            }
+        });
     }
 
     private void initializeMediaPlayer()
@@ -137,7 +144,12 @@ public class RemoteControl implements MediaPlayer.OnPreparedListener{
     public void stopPlaying(){
         if(playerStatus)
         {
-            leMediaPlayer.stop();
+            if(leMediaPlayer != null) {
+                leMediaPlayer.stop();
+            }
+            if(oldMediaPlayer != null) {
+                oldMediaPlayer.stop();
+            }
         } else {
             Log.d(TAG, "Player is already stopped");
         }
